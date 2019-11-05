@@ -1,4 +1,5 @@
-from .padsteering import *
+from padsteering import *
+from client import *
 
 
 #IP_ADDRESS = '192.168.137.68' #adres odroida
@@ -27,19 +28,21 @@ class Connection(Thread):
 
     def __init__(self, ip, port):
         Thread.__init__(self)
-        # self.client = Client(ip, port)
-        # self.flag = self.client.flag
+        self.client = Client(ip, port)
+        self.flag = self.client.flag
         self.data_frame = []
         self.pad = PadSteering()
+        self.trigger_thread = TriggerThread(self.pad)
+
 
     def run(self):
         self.pad.start()
+        self.trigger_thread.start()
         while True:
-            # wysyła ramki danych -> z pada
-            # self.client.sendData(self.pad.getOutput())
+            # wysyła ramki danych z pada
+            self.client.sendData(self.pad.getOutput())
             print(self.pad.get_output())
-            sleep(0.1)
-            print(self.pad.get_output())
+
 
     def set_data_frame(self, data_frame):
         self.data_frame = data_frame
