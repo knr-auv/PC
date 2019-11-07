@@ -7,6 +7,6 @@ if __name__ == "__main__":
     conn_flag = True  # flaga -> opuszczanie pętli od razu po połączeniu
     while conn_flag :
         conn_thread = Connection(IP_ADDRESS, PORT)
-        conn_flag = not conn_flag
+        conn_flag = not conn_thread.flag
 
     conn_thread.start()
