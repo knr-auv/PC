@@ -132,7 +132,7 @@ class TriggerThread(Thread):
             self.pad.set_trigger(int(self.trigger_val))
 
 
-if __name__ == "__main__":
+'''if __name__ == "__main__":
     pad = PadSteering()
     pad.start()
     trigger_thread = TriggerThread(pad)
@@ -140,3 +140,4 @@ if __name__ == "__main__":
     while True:
         print(pad.get_output())
         # sleep(0.05)
+'''
