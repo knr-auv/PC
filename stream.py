@@ -6,8 +6,9 @@ import logging
 
 
 class StreamServer:
+    """Klasa Tworzy serwer do odbierania ramek zdjec"""
     def __init__(self, port=8485, host=''):
-        """socket initialize"""
+        """Inicjalizacja socekta """
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         logging.debug("Socket created port:{}".format(port))
@@ -19,6 +20,7 @@ class StreamServer:
         self.data = b""
         self.payload_size = struct.calcsize(">L")
 
+    """Metdoa zwraca klatke OpenCV uzyskana z socketa """
     def recive_frame(self):
         while len(self.data) < self.payload_size:
             logging.debug(str("Recv: {} port:{}".format(len(self.data), self.port)))
