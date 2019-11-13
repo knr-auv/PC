@@ -5,13 +5,13 @@ from time import sleep
 from client import *
 import threading
 
-IP_ADDRESS = '192.168.137.208'
+IP_ADDRESS = '10.42.0.158'
 PORT = 8200
 
 
 class RotatePlotter(RealtimePlotter):
 
-    def __init__(self, ip,, port):
+    def __init__(self, ip, port):
         RealtimePlotter.__init__(self, [(-180, +180), (-180, +180), (-180, +180)],
                                  show_yvals=True,
                                  window_name='RotatePlot',
@@ -35,13 +35,14 @@ class RotatePlotter(RealtimePlotter):
                         self.input_yaw
 
     def set_values(self, data_frame):
-        #self.output_roll = random.randint(-180, 180)
-        #self.output_pitch = random.randint(-180, 180)
-        #self.output_yaw = random.randint(-180, 180)
 
-        #self.input_roll = random.randint(-180, 180)
-        #self.input_pitch = random.randint(-180, 180)
-        #self.input_yaw = random.randint(-180, 180)
+        # self.output_roll = random.randint(-180, 180)
+        # self.output_pitch = random.randint(-180, 180)
+        # self.output_yaw = random.randint(-180, 180)
+
+        # self.input_roll = random.randint(-180, 180)
+        # self.input_pitch = random.randint(-180, 180)
+        # self.input_yaw = random.randint(-180, 180)
 
         if len(self.data_frame) == 6:
             self.output_roll = data_frame[0]
@@ -67,7 +68,7 @@ class RotatePlotter(RealtimePlotter):
 if __name__ == '__main__':
     import threading
 
-    plotter = RotatePlotter()
+    plotter = RotatePlotter(IP_ADDRESS, PORT)
 
     thread = threading.Thread(target=plotter.update)
     thread.daemon = True
