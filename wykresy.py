@@ -8,14 +8,14 @@ import threading
 IP_ADDRESS = '10.42.0.158'
 PORT = 8200
 
+# yticks=[(-180, 0, +180), (-180, 0, +180), (-180, 0, +180)],
 
 class RotatePlotter(RealtimePlotter):
 
     def __init__(self, ip, port):
-        RealtimePlotter.__init__(self, [(-180, +180), (-180, +180), (-180, +180)],
+        RealtimePlotter.__init__(self, [(-90, +90), (-90, +90), (-90, +90)],
                                  show_yvals=True,
                                  window_name='RotatePlot',
-                                 yticks=[(-180, 0, +180), (-180, 0, +180), (-180, 0, +180)],
                                  styles=[('r--', 'b-'), ('r--', 'b-'), ('r--', 'b-')],
                                  ylabels=['roll', 'pitch', 'yaw'])
         self.output_roll = 0

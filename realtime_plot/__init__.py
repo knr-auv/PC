@@ -229,9 +229,12 @@ class RealtimePlotter(object):
                 RealtimePlotter.rollx(sideline, values[0])
                 RealtimePlotter.rolly(sideline, values[1])
 
+
+
          
          
         # Animation function must return everything we want to animate
         return (self.sideline if self.sideline != None else []) + \
                self.lines + [baseline for baseline,flag in zip(self.baselines,self.baseflags) if flag] + \
                self.axis_texts
+
