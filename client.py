@@ -18,7 +18,7 @@ class Client:
         finally:
             print("Connection test: ", pickle.loads(msg1))
 
-    def receive_data(self):  # metoda, którą odpalimy w wątku i będzie odbierać napływające dane z severa
+    def receiveData(self):  # metoda, którą odpalimy w wątku i będzie odbierać napływające dane z severa
         data = self.client.recv(4096)
         try:
             data = pickle.loads(data)
@@ -29,5 +29,5 @@ class Client:
         finally:
             return data
 
-    def send_data(self, data):
+    def sendData(self, data):
         self.client.send(pickle.dumps(data))

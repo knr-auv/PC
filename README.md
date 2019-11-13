@@ -1,4 +1,10 @@
 # PC
+09.11.2019 - Ernest Szypula
+- add StreamServer
+
+06.11.2019 - Michał Winciorek
+- correct and test scripts connected with Odroid after scrum meeting on that day
+
 04.11.2019 - Michał Winciorek
 - fix connection 
 - change mainpadsteering:

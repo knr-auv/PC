@@ -40,7 +40,7 @@ class Connection(Thread):
         self.trigger_thread.start()
         while True:
             # wysyła ramki danych z pada
-            self.client.sendData(self.pad.getOutput())
+            self.client.sendData(self.pad.get_output())
             print(self.pad.get_output())
 
 
