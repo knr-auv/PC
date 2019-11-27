@@ -1,13 +1,9 @@
 '''
 Real-time scrolling multi-plot over time.
-
 Requires: matplotlib
           numpy
-
 Adapted from example in http://stackoverflow.com/questions/8955869/why-is-plotting-with-matplotlib-so-slow
-
 Copyright (C) 2015 Simon D. Levy
-
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as
 published by the Free Software Foundation, either version 3 of the
@@ -50,9 +46,9 @@ class RealtimePlotter(object):
     def __init__(self, ylims, size=100, phaselims=None, show_yvals=False,
             window_name=None, styles=None, ylabels=None, yticks=[], legends=[], interval_msec=20):
         '''
-        Initializes a multi-plot with specified Y-axis limits as a list of pairs; e.g., 
+        Initializes a multi-plot with specified Y-axis limits as a list of pairs; e.g.,
         [(-1,+1), (0.,5)].  Optional parameters are:
-       
+
         size             size of display (X axis) in arbitrary time steps
         phaselims        xlim,ylim for phase plot
         show_yvals       display Y values in plot if True
@@ -61,7 +57,6 @@ class RealtimePlotter(object):
         yticks           Y-axis tick / grid positions
         legends          list of legends for each subplot
         interval_msec    animation update in milliseconds
-
         For overlaying plots, use a tuple for styles; e.g., styles=[('r','g'), 'b']
         '''
 
@@ -154,7 +149,7 @@ class RealtimePlotter(object):
             plt.show()
         except:
             pass
-  
+
     def get_values(self):
         '''
         Override this method to return actual Y values at current time.
@@ -231,10 +226,9 @@ class RealtimePlotter(object):
 
 
 
-         
-         
+
+
         # Animation function must return everything we want to animate
         return (self.sideline if self.sideline != None else []) + \
                self.lines + [baseline for baseline,flag in zip(self.baselines,self.baseflags) if flag] + \
                self.axis_texts
-
