@@ -15,7 +15,6 @@ class PadSteering(Thread):
         # initialization of all used values.
         self.input = [0, 0, 0, 0, 0]
         self.output = [0, 0, 0, 0, 0]
-        self.prev_val = []
         # Deadzone is the part of axis that we take as a 0 to reduce noise remaining after releasing analog stick
         self.deadzone = 0.
         # Left and right are anologs. Horizontal is x-axis, Vertical is y-axis.
@@ -35,7 +34,6 @@ class PadSteering(Thread):
             self.apply_deadzone()
             # Converting into output
             self.convert_to_output()
-            # sleep(0.05)
 
     def catch_input(self, event):
         """Function used to catch needed input from gamepad.
@@ -81,6 +79,7 @@ class PadSteering(Thread):
             else:
                 self.input[i] /= 32768
         self.input[4] /= 255
+
     def set_trigger(self, trigger_val):
         self.output[4] = trigger_val
 
@@ -112,10 +111,12 @@ class PadSteering(Thread):
             right_vertical_steering += 1
         elif -160 >= right_vertical_steering > -180:
             right_vertical_steering -= 1
+        horizontal_steering = int(1000 * self.input[4]) # usunąć jak będzie sprawny głębokościomierz
         self.output[0] = int(left_motor_duty)
         self.output[1] = int(right_motor_duty)
         self.output[2] = right_horizontal_steering
         self.output[3] = right_vertical_steering
+        self.output[4] = horizontal_steering # usunąć jak będzie sprawny głębokościomierz
 
 
 class TriggerThread(Thread):
@@ -132,12 +133,10 @@ class TriggerThread(Thread):
             self.pad.set_trigger(int(self.trigger_val))
 
 
-'''if __name__ == "__main__":
+if __name__ == "__main__":
     pad = PadSteering()
     pad.start()
-    trigger_thread = TriggerThread(pad)
-    trigger_thread.start()
+    # trigger_thread = TriggerThread(pad) # odkomentować jak będzie sprawny głębokościomierz
+    # trigger_thread.start() # odkomentować jak będzie sprawny głębokościomierz
     while True:
         print(pad.get_output())
-        # sleep(0.05)
-'''
