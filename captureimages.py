@@ -29,7 +29,9 @@ if mode == 2:
     frequency = int(input())
 
 # Numer kamery podlaczonej do komputera moze musiec byc zmieniony, jezeli jest wiecej niz jedna kamera
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
+cam.set(3, 1920)
+cam.set(4, 1080)
 cv2.namedWindow("capturedimages")
 
 # Pobieranie obrazu z kamery
