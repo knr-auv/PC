@@ -1,3 +1,4 @@
 .idea/
-.capturedimages/
 __pycache__/
+*.mp4/
+.capturedimages/
