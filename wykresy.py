@@ -13,7 +13,7 @@ PORT = 8200
 class RotatePlotter(RealtimePlotter):
 
     def __init__(self, ip, port):
-        RealtimePlotter.__init__(self, [(-45, +45), (-45, +45), (-45, +45)],
+        RealtimePlotter.__init__(self, [(-15, +15), (-15, +15), (-15, +15)],
                                  show_yvals=True,
                                  window_name='RotatePlot',
                                  styles=[('r--', 'b-'), ('r--', 'b-'), ('r--', 'b-')],
@@ -58,6 +58,7 @@ class RotatePlotter(RealtimePlotter):
     def update(self):
         while True:
             self.data_frame = self.client.receiveData()
+            print(self.data_frame)
             self.set_values(self.data_frame )
 
 
