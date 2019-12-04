@@ -1,4 +1,7 @@
 # PC
+04.12.2019 - Ernest Szypula
+- add wykresy
+
 09.11.2019 - Ernest Szypula
 - add StreamServer
 
