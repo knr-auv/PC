@@ -30,12 +30,12 @@ class Connection(Thread):
         self.flag = self.client.flag
         self.data_frame = []
         self.pad = PadSteering()
-        self.trigger_thread = TriggerThread(self.pad)
+        #self.trigger_thread = TriggerThread(self.pad)
 
 
     def run(self):
         self.pad.start()
-        self.trigger_thread.start()
+        # self.trigger_thread.start()
         while True:
             # sending data frames from pad
             self.client.sendData(self.pad.get_output())

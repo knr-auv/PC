@@ -1,7 +1,11 @@
 from threading import Thread
 from time import sleep
 
+from client import *
 from inputs import get_gamepad
+
+IP_ADDRESS = '10.42.0.158'
+PORT = 8181
 
 
 class PadSteering(Thread):
@@ -20,6 +24,9 @@ class PadSteering(Thread):
         # Left and right are analogs. Horizontal is x-axis, Vertical is y-axis.
         self.left_vertical = self.left_horizontal = self.right_vertical = self.right_horizontal = 0
         self.left_trigger = self.right_trigger = self.trigger_value = self.trigger_steering = 0
+        # connection with odroid
+        self.client = Client(IP_ADDRESS, PORT)
+        self.flag = self.client.flag
 
     def run(self):
         # Main loop for catching and processing input into output
@@ -34,6 +41,9 @@ class PadSteering(Thread):
             self.apply_deadzone()
             # Converting into output
             self.convert_to_output()
+            # send to odroid
+            self.client.sendData(self.get_output())
+            print(self.get_output())
 
     def catch_input(self, event):
         """Function used to catch needed input from gamepad.
@@ -78,7 +88,7 @@ class PadSteering(Thread):
                 self.input[i] /= 32767
             else:
                 self.input[i] /= 32768
-        self.input[4] /= 255
+        self.input[4] /= 255 * 4
 
     def set_trigger(self, trigger_val):
         self.output[4] = trigger_val
@@ -136,7 +146,7 @@ class TriggerThread(Thread):
 if __name__ == "__main__":
     pad = PadSteering()
     pad.start()
-    # trigger_thread = TriggerThread(pad) # depth meter not working
-    # trigger_thread.start() # depth meter not working
-    while True:
-        print(pad.get_output())
+    # trigger_thread = TriggerThread(pad) # odkomentować jak będzie sprawny głębokościomierz
+    # trigger_thread.start() # odkomentować jak będzie sprawny głębokościomierz
+    # while True:
+    #    print(pad.get_output())
