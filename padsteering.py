@@ -5,7 +5,7 @@ from client import *
 from inputs import get_gamepad
 
 IP_ADDRESS = '10.42.0.158'
-PORT = 8181
+PORT = 8186
 
 
 class PadSteering(Thread):
