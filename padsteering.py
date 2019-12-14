@@ -1,7 +1,7 @@
 from threading import Thread
 from time import sleep
+import math
 from client import *
-
 from inputs import get_gamepad
 
 IP_ADDRESS = '10.42.0.158'
@@ -21,7 +21,7 @@ class PadSteering(Thread):
         self.output = [0, 0, 0, 0, 0]
         # Deadzone is the part of axis that we take as a 0 to reduce noise remaining after releasing analog stick
         self.deadzone = 0.
-        # Left and right are anologs. Horizontal is x-axis, Vertical is y-axis.
+        # Left and right are analogs. Horizontal is x-axis, Vertical is y-axis.
         self.left_vertical = self.left_horizontal = self.right_vertical = self.right_horizontal = 0
         self.left_trigger = self.right_trigger = self.trigger_value = self.trigger_steering = 0
         # connection with odroid
@@ -95,16 +95,11 @@ class PadSteering(Thread):
 
     def convert_to_output(self):
         """Converting input into motors duty or PID offsets"""
-        # Converting left anolog stick input into vertical motors duty
-        throttle = 1000 * self.input[1]
-        motor_factor = self.input[0]
-        if motor_factor >= 0:
-            left_motor_duty = throttle
-            right_motor_duty = throttle*(1-motor_factor)
-        else:
-            left_motor_duty = throttle * (1 - abs(motor_factor))
-            right_motor_duty = throttle
-        # Converting right anolog stick input into two axes offsets
+        # Converting left analog stick input into vertical motors duty
+        throttle = math.sqrt(self.input[0]**2+self.input[1]**2)
+        left_motor_duty = throttle*(self.input[0]+self.input[1])*1000
+        right_motor_duty = throttle*(-self.input[0]+self.input[1])*1000
+        # Converting right analog stick input into two axes offsets
         right_horizontal_steering = int(self.input[2]*180)
         right_vertical_steering = int(self.input[3]*180)
         right_horizontal_diff = right_horizontal_steering - self.output[2]
@@ -121,12 +116,12 @@ class PadSteering(Thread):
             right_vertical_steering += 1
         elif -160 >= right_vertical_steering > -180:
             right_vertical_steering -= 1
-        horizontal_steering = int(1000 * self.input[4]) # usunąć jak będzie sprawny głębokościomierz
+        horizontal_steering = int(1000 * self.input[4]) # depth meter not working
         self.output[0] = int(left_motor_duty)
         self.output[1] = int(right_motor_duty)
         self.output[2] = right_horizontal_steering
         self.output[3] = right_vertical_steering
-        self.output[4] = horizontal_steering # usunąć jak będzie sprawny głębokościomierz
+        self.output[4] = horizontal_steering # depth meter not working
 
 
 class TriggerThread(Thread):
@@ -148,5 +143,5 @@ if __name__ == "__main__":
     pad.start()
     # trigger_thread = TriggerThread(pad) # odkomentować jak będzie sprawny głębokościomierz
     # trigger_thread.start() # odkomentować jak będzie sprawny głębokościomierz
-    #while True:
+    # while True:
     #    print(pad.get_output())

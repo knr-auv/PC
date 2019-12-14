@@ -3,7 +3,7 @@ import socket
 
 
 class Server:
-    def __init__(self, ip):  # konstruktor tworzy socket oraz łączy i testuje połączenie z serverem
+    def __init__(self, ip):  # Constructing socket, connecting and testing connection with server
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         port = 8080
         address = (ip, port)
@@ -14,7 +14,7 @@ class Server:
         msg = 'Connection succesful'
         self.client.send(pickle.dumps(msg))
 
-    def receive_data(self):  # metoda, którą odpalimy w wątku i będzie odbierać napływające dane z jetsona
+    def receive_data(self):  # Method that we run in a thread to capture incoming data from Jetson
         data = self.client.recv(4096)
         return pickle.loads(data)
 

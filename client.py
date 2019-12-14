@@ -3,7 +3,7 @@ import socket
 
 
 class Client:
-    def __init__(self, ip, port):  # konstruktor tworzy socket oraz łączy i testuje połączenie z serverem
+    def __init__(self, ip, port):  # constructing socket, connecting and testing connection
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.ip = ip
         self.port = port
@@ -18,7 +18,7 @@ class Client:
         finally:
             print("Connection test: ", pickle.loads(msg1))
 
-    def receiveData(self):  # metoda, którą odpalimy w wątku i będzie odbierać napływające dane z severa
+    def receiveData(self):  # method run in thread to capture incoming data from server
         data = self.client.recv(4096)
         try:
             data = pickle.loads(data)

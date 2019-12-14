@@ -1,4 +1,9 @@
 # PC
+
+14.12.2019 - Patryk Niemiec
+- new convention of steering
+- simple exception handling when camera is not connected
+
 04.12.2019 - Ernest Szypula
 - add wykresy
 
