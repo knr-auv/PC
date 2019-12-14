@@ -1,6 +1,6 @@
 from threading import Thread
 from time import sleep
-
+import math
 from client import *
 from inputs import get_gamepad
 
@@ -96,14 +96,9 @@ class PadSteering(Thread):
     def convert_to_output(self):
         """Converting input into motors duty or PID offsets"""
         # Converting left analog stick input into vertical motors duty
-        throttle = 1000 * self.input[1]
-        motor_factor = self.input[0]
-        if motor_factor >= 0:
-            left_motor_duty = throttle
-            right_motor_duty = throttle*(1-motor_factor)
-        else:
-            left_motor_duty = throttle * (1 - abs(motor_factor))
-            right_motor_duty = throttle
+        throttle = math.sqrt(self.input[0]**2+self.input[1]**2)
+        left_motor_duty = throttle*(self.input[0]+self.input[1])*1000
+        right_motor_duty = throttle*(-self.input[0]+self.input[1])*1000
         # Converting right analog stick input into two axes offsets
         right_horizontal_steering = int(self.input[2]*180)
         right_vertical_steering = int(self.input[3]*180)
